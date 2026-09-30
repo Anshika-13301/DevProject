@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Lock, Mail, X } from 'lucide-react';
 
+// Render backend URL yahan daalein (localhost hata kar)
+const API_BASE = 'https://your-backend-url.onrender.com/api';
+
 const AdminLogin = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,8 +17,8 @@ const AdminLogin = ({ isOpen, onClose }) => {
     setError('');
     
     try {
-      // Backend Login API Request
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      // Updated with API_BASE variable
+      const res = await axios.post(`${API_BASE}/auth/login`, { email, password });
       
       // Save Token to LocalStorage
       localStorage.setItem('token', res.data.token);
