@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Lock, Mail, X } from 'lucide-react';
 
-// Render backend URL yahan daalein (localhost hata kar)
-const API_BASE = 'https://devproject-rduu.onrender.com/';
+// Sahi API_BASE URL (end me '/' nahi lagana hai, aur '/api' include karna hai)
+const API_BASE = 'https://devproject-rduu.onrender.com/api';
 
 const AdminLogin = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
@@ -17,7 +17,7 @@ const AdminLogin = ({ isOpen, onClose }) => {
     setError('');
     
     try {
-      // Updated with API_BASE variable
+      // Isse correct URL banega: https://devproject-rduu.onrender.com/api/auth/login
       const res = await axios.post(`${API_BASE}/auth/login`, { email, password });
       
       // Save Token to LocalStorage

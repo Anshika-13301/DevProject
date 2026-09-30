@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FolderKanban, Award, Briefcase, Plus, Trash2, Edit3, X, Save, LogOut } from 'lucide-react';
 
-const API_BASE = 'https://devproject-rduu.onrender.com/';
+// Fixed API_BASE URL (removed trailing slash and added /api)
+const API_BASE = 'https://devproject-rduu.onrender.com/api';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('projects');
