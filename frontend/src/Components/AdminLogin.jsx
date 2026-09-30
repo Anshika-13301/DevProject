@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Lock, Mail, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-// Sahi API_BASE URL (end me '/' nahi lagana hai, aur '/api' include karna hai)
 const API_BASE = 'https://devproject-rduu.onrender.com/api';
 
 const AdminLogin = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   if (!isOpen) return null;
 
@@ -17,14 +18,15 @@ const AdminLogin = ({ isOpen, onClose }) => {
     setError('');
     
     try {
-      // Isse correct URL banega: https://devproject-rduu.onrender.com/api/auth/login
       const res = await axios.post(`${API_BASE}/auth/login`, { email, password });
       
       // Save Token to LocalStorage
       localStorage.setItem('token', res.data.token);
       alert('Login Successful!');
       onClose();
-      window.location.href = '/admin'; // Redirect to Admin Dashboard
+
+      // Client-side routing without full browser refresh
+      navigate('/admin');
     } catch (err) {
       setError(err.response?.data?.message || 'Invalid Email or Password');
     }
