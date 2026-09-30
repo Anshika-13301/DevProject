@@ -6,7 +6,7 @@ const Certificates = () => {
   const [certificates, setCertificates] = useState([]);
 
   useEffect(() => {
-    axios.get('https://devproject-rduu.onrender.com/')
+    axios.get('https://devproject-rduu.onrender.com/api')
       .then(res => setCertificates(res.data))
       .catch(err => console.error(err));
   }, []);

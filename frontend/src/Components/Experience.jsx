@@ -10,7 +10,7 @@ const Experience = () => {
   useEffect(() => {
     const fetchInternships = async () => {
       try {
-        const res = await axios.get('https://devproject-rduu.onrender.com/');
+        const res = await axios.get('https://devproject-rduu.onrender.com/api');
         setInternships(res.data);
       } catch (err) {
         console.error('Error fetching internships:', err);
