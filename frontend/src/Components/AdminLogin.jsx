@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Lock, Mail, X } from 'lucide-react';
 
 // Render backend URL yahan daalein (localhost hata kar)
-const API_BASE = 'https://your-backend-url.onrender.com/api';
+const API_BASE = 'https://devproject-rduu.onrender.com/';
 
 const AdminLogin = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
