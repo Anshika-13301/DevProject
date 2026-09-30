@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Briefcase } from 'lucide-react';
+
+const API_BASE = 'https://devproject-rduu.onrender.com/api';
 
 const Experience = () => {
   const [internships, setInternships] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Backend se dynamic internships fetch karne ke liye
   useEffect(() => {
-    const fetchInternships = async () => {
+    const fetchExperience = async () => {
       try {
-        const res = await axios.get('https://devproject-rduu.onrender.com/api');
+        const res = await axios.get(`${API_BASE}/internships`);
         setInternships(res.data);
       } catch (err) {
         console.error('Error fetching internships:', err);
@@ -18,69 +19,34 @@ const Experience = () => {
         setLoading(false);
       }
     };
-
-    fetchInternships();
+    fetchExperience();
   }, []);
 
   return (
-    <section className="py-12 bg-slate-950 text-white">
-      <div className="max-w-6xl mx-auto px-4">
-        
-        {/* Heading */}
-        <h2 className="text-3xl font-extrabold mb-8 flex items-center gap-3 text-white">
-          <Briefcase className="w-8 h-8 text-purple-400" />
-          Work Experience
-        </h2>
+    <section id="experience" className="py-12 px-6 max-w-6xl mx-auto">
+      <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+        <Briefcase className="w-6 h-6 text-purple-400" /> Work Experience
+      </h2>
 
-        {loading ? (
-          <p className="text-slate-400 text-sm">Loading experience...</p>
-        ) : internships.length === 0 ? (
-          <p className="text-slate-500 text-sm">No work experience added yet.</p>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {internships.map((item) => (
-              <div
-                key={item._id}
-                className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 hover:border-purple-500/40 transition duration-300 shadow-xl flex flex-col justify-between"
-              >
-                <div>
-                  {/* Duration / Dates */}
-                  {item.duration && (
-                    <span className="text-xs uppercase tracking-wider font-semibold text-purple-400 block mb-2">
-                      {item.duration}
-                    </span>
-                  )}
-
-                  {/* Role Title */}
-                  <h3 className="text-xl font-bold text-white mb-1">
-                    {item.role}
-                  </h3>
-
-                  {/* Company & Location */}
-                  <p className="text-slate-400 text-sm mb-4">
-                    {item.company} {item.location ? `(${item.location})` : ''}
-                  </p>
-
-                  {/* Description / Bullet points */}
-                  {item.description && (
-                    <div className="text-slate-300 text-xs space-y-2 leading-relaxed">
-                      {item.description.split('\n').map((line, idx) => (
-                        line.trim() && (
-                          <div key={idx} className="flex items-start gap-2">
-                            <span className="text-purple-400 font-bold">•</span>
-                            <span>{line.trim()}</span>
-                          </div>
-                        )
-                      ))}
-                    </div>
-                  )}
-                </div>
+      {loading ? (
+        <p className="text-slate-400 text-sm">Loading experience...</p>
+      ) : internships.length === 0 ? (
+        <p className="text-slate-500 text-sm">No work experience added yet.</p>
+      ) : (
+        <div className="grid md:grid-cols-2 gap-4">
+          {internships.map((item) => (
+            <div key={item._id} className="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+              <h3 className="font-bold text-lg text-white">{item.role}</h3>
+              <p className="text-purple-400 text-sm font-medium">{item.company}</p>
+              <div className="flex flex-wrap gap-3 text-slate-400 text-xs mt-2">
+                {item.duration && <span>🗓️ {item.duration}</span>}
+                {item.location && <span>📍 {item.location}</span>}
               </div>
-            ))}
-          </div>
-        )}
-
-      </div>
+              {item.description && <p className="text-slate-400 text-xs mt-3 leading-relaxed">{item.description}</p>}
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 };
