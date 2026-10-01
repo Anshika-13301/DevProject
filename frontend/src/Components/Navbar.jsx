@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Lock, LogOut, LayoutDashboard, Eye } from 'lucide-react';
+import { Menu, X, Lock, LogOut, LayoutDashboard, Eye, FileText } from 'lucide-react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import AdminLogin from './AdminLogin';
 
 const Navbar = () => {
@@ -7,7 +8,11 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const isAdminPage = window.location.pathname === '/admin';
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Route check using React Router Hook (No page reload)
+  const isAdminPage = location.pathname === '/admin';
 
   // Check if token exists in localStorage
   useEffect(() => {
@@ -15,7 +20,6 @@ const Navbar = () => {
     setIsLoggedIn(!!token);
   }, []);
 
-  // Use '/#section' so links work from both '/' and '/admin' routes
   const navLinks = [
     { name: 'About', href: '/#about' },
     { name: 'Experience', href: '/#experience' },
@@ -28,12 +32,12 @@ const Navbar = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
     alert('Logged out successfully');
-    window.location.href = '/';
+    navigate('/');
   };
 
   const handleAdminButtonClick = () => {
     if (isLoggedIn) {
-      window.location.href = '/admin';
+      navigate('/admin');
     } else {
       localStorage.removeItem('token');
       setIsLoginOpen(true);
@@ -46,9 +50,9 @@ const Navbar = () => {
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           
           {/* Logo / Portfolio Title */}
-          <a href="/" className="text-2xl font-extrabold tracking-wider text-white flex items-center gap-1 group">
+          <Link to="/" className="text-2xl font-extrabold tracking-wider text-white flex items-center gap-1 group">
             <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Anshika</span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
@@ -65,23 +69,33 @@ const Navbar = () => {
 
           {/* Desktop Action Buttons */}
           <div className="hidden md:flex items-center gap-3">
+            {/* View Resume Button (Opens PDF in New Tab) */}
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-purple-400 border border-slate-800 hover:border-purple-500/50 bg-slate-900/60 px-3.5 py-2.5 rounded-xl transition"
+            >
+              <FileText className="w-3.5 h-3.5 text-purple-400" /> Resume
+            </a>
+
             {isLoggedIn ? (
               <>
                 {/* Toggle between Admin Dashboard & View Portfolio */}
                 {isAdminPage ? (
-                  <a
-                    href="/"
+                  <button
+                    onClick={() => navigate('/')}
                     className="flex items-center gap-2 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-700/60 text-emerald-300 text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-lg"
                   >
                     <Eye className="w-4 h-4 text-emerald-400" /> View Portfolio
-                  </a>
+                  </button>
                 ) : (
-                  <a
-                    href="/admin"
+                  <button
+                    onClick={() => navigate('/admin')}
                     className="flex items-center gap-2 bg-purple-950/80 hover:bg-purple-900 border border-purple-700/60 text-purple-300 text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-lg"
                   >
                     <LayoutDashboard className="w-4 h-4 text-purple-400" /> Dashboard
-                  </a>
+                  </button>
                 )}
 
                 <button
@@ -125,27 +139,42 @@ const Navbar = () => {
                   {link.name}
                 </a>
               ))}
+              
+              {/* Resume Mobile Link */}
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-purple-400 font-medium py-1 flex items-center gap-2 text-base"
+              >
+                <FileText className="w-4 h-4" /> View Resume
+              </a>
             </div>
 
             <div className="pt-4 border-t border-slate-800 flex flex-col gap-3">
               {isLoggedIn ? (
                 <>
                   {isAdminPage ? (
-                    <a
-                      href="/"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                    <button
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        navigate('/');
+                      }}
                       className="flex items-center justify-center gap-2 bg-emerald-900/50 border border-emerald-700 text-emerald-300 font-semibold py-2.5 rounded-xl text-sm"
                     >
                       <Eye className="w-4 h-4" /> View Portfolio
-                    </a>
+                    </button>
                   ) : (
-                    <a
-                      href="/admin"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                    <button
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        navigate('/admin');
+                      }}
                       className="flex items-center justify-center gap-2 bg-purple-900/50 border border-purple-700 text-purple-300 font-semibold py-2.5 rounded-xl text-sm"
                     >
                       <LayoutDashboard className="w-4 h-4" /> Dashboard
-                    </a>
+                    </button>
                   )}
                   
                   <button
