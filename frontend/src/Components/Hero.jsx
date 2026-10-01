@@ -1,94 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Award, Loader2 } from 'lucide-react';
-import axios from 'axios';
-import defaultProfileImg from '../assets/profile.png';
-
-// Default Data (Backup agar DB/API me data na ho)
-const DEFAULT_HERO = {
-  statusBadge: 'AVAILABLE FOR FREELANCE & FULL-TIME',
-  name: 'Anshika Ramesh Shukla',
-  title: 'Full Stack MERN Developer | B.E. Computer Science (CGPA: 8.99)',
-  bio: 'Final-year CS student at Rizvi College of Engineering with hands-on experience in MERN Stack development, workflow automation, and real-time network monitoring.',
-  email: 'shuklaanshika115@gmail.com',
-  phone: '+91 8149203613',
-  location: 'Mumbai, India',
-  githubUrl: 'https://github.com/Anshika-13301',
-  profileImage: ''
-};
+import React from 'react';
+import { Mail, Phone, MapPin, Award } from 'lucide-react';
+import profileImg from '../assets/profile.png'; // Profile Image Import
 
 const Hero = () => {
-  const [heroData, setHeroData] = useState(DEFAULT_HERO);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchHeroData = async () => {
-      try {
-        // Vercel / Live Backend API Call
-        const res = await axios.get('/api/hero');
-        
-        // Merge fetched data with fallback defaults (so missing fields don't disappear)
-        if (res.data && Object.keys(res.data).length > 0) {
-          setHeroData({
-            statusBadge: res.data.statusBadge || DEFAULT_HERO.statusBadge,
-            name: res.data.name || DEFAULT_HERO.name,
-            title: res.data.title || DEFAULT_HERO.title,
-            bio: res.data.bio || DEFAULT_HERO.bio,
-            email: res.data.email || DEFAULT_HERO.email,
-            phone: res.data.phone || DEFAULT_HERO.phone,
-            location: res.data.location || DEFAULT_HERO.location,
-            githubUrl: res.data.githubUrl || DEFAULT_HERO.githubUrl,
-            profileImage: res.data.profileImage || ''
-          });
-        }
-      } catch (error) {
-        console.warn('API Fetch failed, using default hero data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchHeroData();
-  }, []);
-
   return (
-    <section id="about" className="pt-32 pb-20 px-6 max-w-6xl mx-auto text-white min-h-[500px]">
+    <section id="about" className="pt-32 pb-20 px-6 max-w-6xl mx-auto text-white">
       <div className="flex flex-col md:flex-row items-center justify-between gap-10">
         
         {/* Text & Information Section */}
         <div className="flex-1 order-2 md:order-1 text-left">
           <span className="inline-block bg-purple-950 text-purple-300 border border-purple-800 px-3 py-1 rounded-full text-xs font-semibold tracking-wide mb-4">
-            {heroData.statusBadge}
+            AVAILABLE FOR FREELANCE & FULL-TIME
           </span>
-
           <h1 className="text-4xl md:text-6xl font-extrabold mb-2">
-            {heroData.name}
+            Anshika Ramesh Shukla
           </h1>
-
           <p className="text-xl text-purple-400 font-medium mb-4">
-            {heroData.title}
+            Full Stack MERN Developer | B.E. Computer Science (CGPA: 8.99)
           </p>
-
           <p className="text-slate-400 max-w-2xl leading-relaxed mb-6">
-            {heroData.bio}
+            Final-year CS student at Rizvi College of Engineering with hands-on experience in MERN Stack development, workflow automation, and real-time network monitoring.
           </p>
 
           {/* Contact Badges */}
           <div className="flex flex-wrap gap-3 text-xs text-slate-300 mb-8">
             <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-2 rounded-lg border border-slate-700">
-              <Mail className="w-4 h-4 text-purple-400" /> {heroData.email}
+              <Mail className="w-4 h-4 text-purple-400" /> shuklaanshika115@gmail.com
             </div>
             <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-2 rounded-lg border border-slate-700">
-              <Phone className="w-4 h-4 text-purple-400" /> {heroData.phone}
+              <Phone className="w-4 h-4 text-purple-400" /> +91 8149203613
             </div>
             <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-2 rounded-lg border border-slate-700">
-              <MapPin className="w-4 h-4 text-purple-400" /> {heroData.location}
+              <MapPin className="w-4 h-4 text-purple-400" /> Mumbai, India
             </div>
           </div>
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4">
             <a 
-              href={heroData.githubUrl} 
+              href="https://github.com/Anshika-13301" 
               target="_blank" 
               rel="noreferrer" 
               className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl border border-slate-700 transition"
@@ -98,7 +48,6 @@ const Hero = () => {
               </svg>
               GitHub Profile
             </a>
-            
             <a 
               href="#hire" 
               className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-purple-950/50 transition transform active:scale-95"
@@ -113,8 +62,8 @@ const Hero = () => {
           <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl blur-lg opacity-70 group-hover:opacity-100 transition duration-500"></div>
           <div className="relative w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden border-2 border-slate-700 bg-slate-900 shadow-2xl">
             <img 
-              src={heroData.profileImage || defaultProfileImg} 
-              alt={heroData.name} 
+              src={profileImg} 
+              alt="Anshika Ramesh Shukla" 
               className="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105"
             />
           </div>
