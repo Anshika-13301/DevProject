@@ -1,10 +1,10 @@
-# 🚀 Dynamic Portfolio & Admin Dashboard
+#  Dynamic Portfolio & Admin Dashboard
 
 A full-stack dynamic portfolio application built with **React**, **Tailwind CSS**, **Node.js**, **Express**, and **MongoDB**. It features a modern dark-themed UI and a secure Admin Dashboard to dynamically manage work experience, projects, and certifications.
 
 ---
 
-## ✨ Features
+## Features
 
 - **Dynamic Content Management:** Add, update, and remove projects, work experience, and certifications in real-time.
 - **Admin Authentication:** Secure JWT-based admin login with interactive modal overlay.
@@ -14,7 +14,7 @@ A full-stack dynamic portfolio application built with **React**, **Tailwind CSS*
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **Framework:** React.js (Vite)
@@ -33,7 +33,7 @@ A full-stack dynamic portfolio application built with **React**, **Tailwind CSS*
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 ├── frontend/
